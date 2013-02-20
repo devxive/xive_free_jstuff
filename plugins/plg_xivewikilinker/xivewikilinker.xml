@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @file	$Id$ -->
+<extension version="2.5" type="plugin" group="content" method="upgrade">
+	<name>PLG_SYS_XIVEWIKILINKER</name>
+	<author>devXive</author>
+	<creationDate>02/16/2013</creationDate>
+	<copyright>Copyright (C) 1997 - 2013 devXive - research and development. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<assetsLicense>devXive Proprietary Use License (http://www.devxive.com/license)</assetsLicense>
+	<authorEmail>support@devXive.com</authorEmail>
+	<authorUrl>www.devxive.com</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_SYS_XIVEWIKILINKER_XML_DESC</description>
+	
+	<files>
+		<filename plugin="xivewikilinker">xivewikilinker.php</filename>
+		<filename>changelog</filename>
+		<folder>language</folder>
+	</files>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+					<field name="spacer1" type="spacer" hr="true" />
+			<field name="&lt;b&gt;General Settings:&lt;/b&gt;" type="spacer" />
+				<field name="state" type="list" default="1" label="PLG_SYS_XIVEWIKILINKER_STATE_LABEL" description="PLG_SYS_XIVEWIKILINKER_STATE_DESC">
+					<option value="1">Activate</option>
+					<option value="0">Deactivate</option>
+				</field>
+				<field name="lang" type="text" default="en" label="PLG_SYS_XIVEWIKILINKER_LANGUAGE_LABEL" description="PLG_SYS_XIVEWIKILINKER_LANGUAGE_DESC"></field>
+				<field name="wikipath" type="list" default="search" label="PLG_SYS_XIVEWIKILINKER_WIKIPATH_LABEL" description="PLG_SYS_XIVEWIKILINKER_WIKIPATH_DESC">
+					<option value="search">Search</option>
+					<option value="direct">Direct link</option>
+				</field>
+				<field name="ltarget" type="list" default="new" label="PLG_SYS_XIVEWIKILINKER_TARGET_LABEL" description="PLG_SYS_XIVEWIKILINKER_TARGET_DESC">
+					<option value="same">Same page</option>
+					<option value="new">New page</option>
+				</field>
+				<field name="color" type="text" default="" label="PLG_SYS_XIVEWIKILINKER_COLOR_LABEL" description="PLG_SYS_XIVEWIKILINKER_COLOR_DESC"></field>
+				<field name="spacer2" type="spacer" hr="true" />
+				<field name="&lt;b&gt;Custom Wiki Settings:&lt;/b&gt;" type="spacer" />
+				<field name="custom_site" type="text" default="" label="PLG_SYS_XIVEWIKILINKER_CUSTOM_SITE_LABEL" description="PLG_SYS_XIVEWIKILINKER_CUSTOM_SITE_DESC"></field>
+				<field name="custom_sitename" type="text" default="" label="PLG_SYS_XIVEWIKILINKER_CUSTOM_SITENAME_LABEL" description="PLG_SYS_XIVEWIKILINKER_CUSTOM_SITENAME_DESC"></field>
+				<field name="spacer3" type="spacer" hr="true" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>
+
