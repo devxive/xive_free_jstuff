@@ -9,7 +9,7 @@
 	<assetsLicense>devXive Proprietary Use License (http://www.devxive.com/license)</assetsLicense>
 	<authorEmail>support@devXive.com</authorEmail>
 	<authorUrl>www.devxive.com</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>PLG_KUNENA_ONECLICKSOLVED_XML_DESC</description>
 	<files>
 		<filename plugin="oneclicksolved">oneclicksolved.php</filename>
@@ -24,6 +24,10 @@
 
 				<field name="topic_solved_text" type="text" default="[SOLVED]" label="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_DESC" />
 				<field name="topic_solved_reply_text" type="text" default="Problem has been solved!" label="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_REPLY_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_REPLY_DESC" />
+				<field name="topic_locked" type="radio" default="0" label="PLG_KUNENA_ONECLICKSOLVED_TOPIC_LOCKED_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_TOPIC_LOCKED_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 				<field name="do_solved_reply" type="radio" default="0" label="PLG_KUNENA_ONECLICKSOLVED_DO_REPLY_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_DO_REPLY_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

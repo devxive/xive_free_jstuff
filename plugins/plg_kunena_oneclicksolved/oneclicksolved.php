@@ -23,6 +23,8 @@ class plgKunenaOneClickSolved extends JPlugin
 
 		// load language file:		
 		$this->loadLanguage('plg_kunena_oneclicksolved.sys', JPATH_ADMINISTRATOR);
+		
+		$topicLocked = (int)$this->params->get('topic_locked', '0');
 	}
 	
 	public function onAfterRoute()
@@ -67,8 +69,9 @@ class plgKunenaOneClickSolved extends JPlugin
 		// topic already marked as solved?
 		$topicSolvedText = $this->params->get('topic_solved_text', '[SOLVED]');
 		$topicSolvedReplyText = $this->params->get('topic_solved_reply_text', 'Problem has been solved!');
-		$doSolvedReply = (int)$this->params->get('do_solved_reply', 1);		
-		$setIcon_id = (int)$this->params->get('set_icon_id', '8');		
+		$doSolvedReply = (int)$this->params->get('do_solved_reply', 1);
+		$setIcon_id = (int)$this->params->get('set_icon_id', '8');
+		$topicLocked = (int)$this->params->get('topic_locked', '0');
 		if(stripos($topicData['subject'], $topicSolvedText) !== false)
 		{
 			return;
@@ -76,8 +79,9 @@ class plgKunenaOneClickSolved extends JPlugin
 		
 		// add '[SOLVED]' to topic:
 		$dbo->setQuery("UPDATE #__kunena_topics SET
+			subject = " . $dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . ",
 			icon_id = " . $setIcon_id . ",
-			subject = " . $dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . "
+			locked = " . $topicLocked . "
 			WHERE id = " . (int)$topicData['id'] . " LIMIT 1");
 		$dbo->query();
 
@@ -108,6 +112,7 @@ class plgKunenaOneClickSolved extends JPlugin
 	
 	public function onAfterRender()
 	{		
+		$topicLocked = (int)$this->params->get('topic_locked', '0');
 		$JInput = JFactory::getApplication()->input;
 		
 		// kunena topic view loaded?
@@ -145,21 +150,20 @@ class plgKunenaOneClickSolved extends JPlugin
 	    }
 
 		// insert button-code into html:
+		if ($topicLocked == 0) {
+			$buttonText = JText::_('PLG_KUNENA_ONECLICKSOLVED_BUTTONTEXT_SOLVED');
+		} else {
+			$buttonText = JText::_('PLG_KUNENA_ONECLICKSOLVED_BUTTONTEXT_SOLVED_LOCKED');
+		}
 		$buttonCode = '
-			<div class="yagSolved" style="float:left; margin: 4px 5px 0px 0px;">
-				<a class="kicon-button kbuttonuser btn-left" href="{$solved_link}">
-					<span class="layout-flat">
-						<span>{$solved_text}</span>
+			<div class="OneClickSolved" style="float: right; margin: 0 5px;">
+				<a class="kicon-button kbuttonuser kbuttonmod btn-left" href="' . KunenaRoute::_('index.php?option=com_kunena&view=topic&ocstask=solved&catid='.$catId.'&id='.$topicId) . '">
+					<span class="sticky">
+						<span>' . $buttonText . '</span>
 					</span>
 				</a>
 			</div>
 		';
-		if(empty($buttonCode))
-		{
-			return;
-		}
-		$buttonCode = str_replace('{$solved_text}', JText::_('PLG_KUNENA_ONECLICKSOLVED_BUTTONTEXT'), $buttonCode);
-		$buttonCode = str_replace('{$solved_link}', KunenaRoute::_('index.php?option=com_kunena&view=topic&ocstask=solved&catid='.$catId.'&id='.$topicId), $buttonCode);		
 	    $body = JResponse::getBody();
 	    preg_match_all('#<div class="kmessage-buttons-cover">\s+<div class="kmessage-buttons-row">.*</div>\s+</div>#Us', $body, $matches);	    
 	    if(empty($matches[0]))
