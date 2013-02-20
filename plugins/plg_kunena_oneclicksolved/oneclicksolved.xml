@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @file	$Id$ -->
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+	<name>PLG_KUNENA_ONECLICKSOLVED</name>
+	<author>devXive</author>
+	<creationDate>02/16/2013</creationDate>
+	<copyright>Copyright (C) 1997 - 2013 devXive - research and development. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<assetsLicense>devXive Proprietary Use License (http://www.devxive.com/license)</assetsLicense>
+	<authorEmail>support@devXive.com</authorEmail>
+	<authorUrl>www.devxive.com</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_KUNENA_ONECLICKSOLVED_XML_DESC</description>
+	<files>
+		<filename plugin="oneclicksolved">oneclicksolved.php</filename>
+		<filename>index.html</filename>
+		<folder>elements</folder>
+		<folder>language</folder>
+		<folder>tpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/plugins/kunena/oneclicksolved/elements">
+				<field name="set_icon_id" type="TopicIcons" label="PLG_KUNENA_ONECLICKSOLVED_TOPIC_ICON_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_TOPIC_ICON_DESC" />
+
+				<field name="topic_solved_text" type="text" default="[SOLVED]" label="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_DESC" />
+				<field name="topic_solved_reply_text" type="text" default="Problem has been solved!" label="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_REPLY_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_TOPIC_SOLVED_REPLY_DESC" />
+				<field name="do_solved_reply" type="radio" default="0" label="PLG_KUNENA_ONECLICKSOLVED_DO_REPLY_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_DO_REPLY_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="enable_for_admin" type="radio" default="1" label="PLG_KUNENA_ONECLICKSOLVED_ENABLE_FOR_ADMIN_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_ENABLE_FOR_ADMIN_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="enable_for_moderator" type="radio" default="1" label="PLG_KUNENA_ONECLICKSOLVED_ENABLE_FOR_MODERATOR_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_ENABLE_FOR_MODERATOR_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="enable_for_topic_starter" type="radio" default="1" label="PLG_KUNENA_ONECLICKSOLVED_ENABLE_FOR_TOPIC_STARTER_LABEL" description="PLG_KUNENA_ONECLICKSOLVED_ENABLE_FOR_TOPIC_STARTER_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
