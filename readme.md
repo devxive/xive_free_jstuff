@@ -11,7 +11,7 @@ Please see the Wiki Pages
 Zip the folder of that extensions you wish to install, click "upload and install".
 
 #### upload the appropriate folder with your favourite ftp client
-Upload the folder to your joomla root tmp folder. Install it using the extension manager "Install from directory"
+Upload the folder to your joomla root tmp folder. Install it using the extension manager "Install from directory".
 Type in the name of the folder (should be like: ..../tmp/NAME_OF_THE_FOLDER_YOU_WOULD_INSTALL)
 click "install"
 
