@@ -53,12 +53,12 @@ class plgKunenaOneClickSolved extends JPlugin
 		}
 		
 		// topic-id valid?
-		$Dbo = JFactory::getDBO();
-		$Dbo->setQuery('SELECT kt.subject, kt.id
+		$dbo = JFactory::getDBO();
+		$dbo->setQuery('SELECT kt.subject, kt.id
 			FROM #__kunena_topics kt
 			WHERE kt.id = ' . $topicId);
-		$Dbo->query();		
-		$topicData = $Dbo->loadAssoc();		
+		$dbo->query();		
+		$topicData = $dbo->loadAssoc();		
 		if(empty($topicData) || (int)$topicData['id'] === 0)
 		{
 			return;
@@ -75,31 +75,33 @@ class plgKunenaOneClickSolved extends JPlugin
 		}
 		
 		// add '[SOLVED]' to topic:
-		$Dbo->setQuery("UPDATE #__kunena_topics SET subject = " . $Dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . " WHERE id = " . (int)$topicData['id'] . " LIMIT 1");
-		$Dbo->query();
+		$dbo->setQuery("UPDATE #__kunena_topics SET
+			icon_id = " . $setIcon_id . ",
+			subject = " . $dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . "
+			WHERE id = " . (int)$topicData['id'] . " LIMIT 1");
+		$dbo->query();
 
 		// post a "solved" message:	
 		if($doSolvedReply === 1)
 		{
-			$Dbo->setQuery("INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon)
-				VALUES(0, " . (int)$topicData['id'] . ", " . $catId . ", ".$Dbo->quote($User->username, true).", " . (int)$User->id . ", " . $Dbo->quote($User->email, true) . ", ".$Dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . ", " . JFactory::getDate('now')->toUnix() . ", " . $Dbo->quote($_SERVER['REMOTE_ADDR'], true) . ", 0)");
-			$Dbo->query();
-			$messageId = $Dbo->insertid();
+			$dbo->setQuery("INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon)
+				VALUES(0, " . (int)$topicData['id'] . ", " . $catId . ", ".$dbo->quote($User->username, true).", " . (int)$User->id . ", " . $dbo->quote($User->email, true) . ", ".$dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . ", " . JFactory::getDate('now')->toUnix() . ", " . $dbo->quote($_SERVER['REMOTE_ADDR'], true) . ", 0)");
+			$dbo->query();
+			$messageId = $dbo->insertid();
 
-			$Dbo->setQuery("INSERT INTO #__kunena_messages_text (mesid, message) VALUES (".(int)$messageId.", ". $Dbo->quote($topicSolvedReplyText, true).")");
-			$Dbo->query();
+			$dbo->setQuery("INSERT INTO #__kunena_messages_text (mesid, message) VALUES (".(int)$messageId.", ". $dbo->quote($topicSolvedReplyText, true).")");
+			$dbo->query();
 
 			if(!empty($messageId))
 			{
-				$Dbo->setQuery("UPDATE #__kunena_topics SET
-					icon_id = " . $setIcon_id . ",
+				$dbo->setQuery("UPDATE #__kunena_topics SET
 					last_post_id = " . $messageId . ",
 					last_post_time = '" . JFactory::getDate('now')->toUnix() . "',
 					last_post_userid = " . (int)$User->id . ",
-					last_post_message = " . $Dbo->quote($topicSolvedReplyText, true).",
-					last_post_guest_name = " . $Dbo->quote($User->username, true) . "
+					last_post_message = " . $dbo->quote($topicSolvedReplyText, true).",
+					last_post_guest_name = " . $dbo->quote($User->username, true) . "
 					WHERE id = " . (int)$topicData['id'] . " LIMIT 1");
-				$Dbo->query();
+				$dbo->query();
 			}
 		}
 	}
@@ -173,7 +175,7 @@ class plgKunenaOneClickSolved extends JPlugin
 	
 	private function _userIsAuthorized()
 	{	
-		$Dbo = JFactory::getDBO();
+		$dbo = JFactory::getDBO();
 		$User = JFactory::getUser();		
 		$JInput = JFactory::getApplication()->input;
 		
@@ -214,11 +216,11 @@ class plgKunenaOneClickSolved extends JPlugin
 		// authorize user if topic-starter:
 		if($enableForTopicStarter === 1)
 		{
-			$Dbo->setQuery("SELECT kt.first_post_userid
+			$dbo->setQuery("SELECT kt.first_post_userid
 				FROM #__kunena_topics kt
 				WHERE kt.id = " . $topicId);
-			$Dbo->query();		
-			$authorId = (int)$Dbo->loadResult();		
+			$dbo->query();		
+			$authorId = (int)$dbo->loadResult();		
 			if($authorId === $userId)
 			{
 				return true;
