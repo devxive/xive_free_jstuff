@@ -16,7 +16,6 @@
 		<filename>index.html</filename>
 		<folder>elements</folder>
 		<folder>language</folder>
-		<folder>tpl</folder>
 	</files>
 	<config>
 		<fields name="params">
