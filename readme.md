@@ -4,7 +4,7 @@
 Please see the Wiki Pages
 
 ## How to install extensions
-- Download the repo using the icon at the top of this site or if you using github too, simply fork it.
+- Download the repo using the ZIP icon at the top of this site or if you using github too, simply fork it.
 - If you found an extensions you wish to install,
 
 #### build a zip file for use with joomla's install manager
