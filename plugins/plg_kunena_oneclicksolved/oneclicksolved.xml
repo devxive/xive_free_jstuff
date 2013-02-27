@@ -9,7 +9,7 @@
 	<assetsLicense>devXive Proprietary Use License (http://www.devxive.com/license)</assetsLicense>
 	<authorEmail>support@devXive.com</authorEmail>
 	<authorUrl>www.devxive.com</authorUrl>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<description>PLG_KUNENA_ONECLICKSOLVED_XML_DESC</description>
 	<files>
 		<filename plugin="oneclicksolved">oneclicksolved.php</filename>
