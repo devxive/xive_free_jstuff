@@ -19,20 +19,20 @@ class plgKunenaOneClickSolved extends JPlugin
 			return;
 		}
 		
-		parent::__construct ($subject, $config);		
-
-		// load language file:		
+		parent::__construct ($subject, $config);
+		
+		// load language file:
 		$this->loadLanguage('plg_kunena_oneclicksolved.sys', JPATH_ADMINISTRATOR);
 		
 		$topicLocked = (int)$this->params->get('topic_locked', '0');
 	}
 	
 	public function onAfterRoute()
-	{		
+	{
 		$JInput = JFactory::getApplication()->input;
 		
 		// solved-link clicked?
-		$app = $JInput->getString('option', null);		
+		$app = $JInput->getString('option', null);
 		$task = $JInput->getString('ocstask', null);
 		if($app !== 'com_kunena' || $task !== 'solved')
 		{
@@ -48,8 +48,8 @@ class plgKunenaOneClickSolved extends JPlugin
 		}
 		
 		// user authorized to perform solved action?
-		$User = JFactory::getUser();		
-		if($this->_userIsAuthorized() === false)
+		$User = JFactory::getUser();
+		if($this->_userIsAuthorized() == false)
 		{
 			return;
 		}
@@ -59,19 +59,20 @@ class plgKunenaOneClickSolved extends JPlugin
 		$dbo->setQuery('SELECT kt.subject, kt.id
 			FROM #__kunena_topics kt
 			WHERE kt.id = ' . $topicId);
-		$dbo->query();		
-		$topicData = $dbo->loadAssoc();		
-		if(empty($topicData) || (int)$topicData['id'] === 0)
+		$dbo->query();
+		$topicData = $dbo->loadAssoc();
+		if(empty($topicData) || (int)$topicData['id'] == 0)
 		{
 			return;
-		}		
-
-		// topic already marked as solved?
+		}
+		
+		// mark topic as solved!
 		$topicSolvedText = $this->params->get('topic_solved_text', '[SOLVED]');
 		$topicSolvedReplyText = $this->params->get('topic_solved_reply_text', 'Problem has been solved!');
 		$doSolvedReply = (int)$this->params->get('do_solved_reply', 1);
 		$setIcon_id = (int)$this->params->get('set_icon_id', '8');
 		$topicLocked = (int)$this->params->get('topic_locked', '0');
+		
 		if(stripos($topicData['subject'], $topicSolvedText) !== false)
 		{
 			return;
@@ -84,18 +85,18 @@ class plgKunenaOneClickSolved extends JPlugin
 			locked = " . $topicLocked . "
 			WHERE id = " . (int)$topicData['id'] . " LIMIT 1");
 		$dbo->query();
-
-		// post a "solved" message:	
+		
+		// post a "solved" message:
 		if($doSolvedReply === 1)
 		{
 			$dbo->setQuery("INSERT INTO #__kunena_messages (parent, thread, catid, name, userid, email, subject, time, ip, topic_emoticon)
 				VALUES(0, " . (int)$topicData['id'] . ", " . $catId . ", ".$dbo->quote($User->username, true).", " . (int)$User->id . ", " . $dbo->quote($User->email, true) . ", ".$dbo->quote($topicSolvedText . ' ' . $topicData['subject'], true) . ", " . JFactory::getDate('now')->toUnix() . ", " . $dbo->quote($_SERVER['REMOTE_ADDR'], true) . ", 0)");
 			$dbo->query();
 			$messageId = $dbo->insertid();
-
+			
 			$dbo->setQuery("INSERT INTO #__kunena_messages_text (mesid, message) VALUES (".(int)$messageId.", ". $dbo->quote($topicSolvedReplyText, true).")");
 			$dbo->query();
-
+			
 			if(!empty($messageId))
 			{
 				$dbo->setQuery("UPDATE #__kunena_topics SET
@@ -111,44 +112,58 @@ class plgKunenaOneClickSolved extends JPlugin
 	}
 	
 	public function onAfterRender()
-	{		
+	{
 		$topicLocked = (int)$this->params->get('topic_locked', '0');
 		$JInput = JFactory::getApplication()->input;
 		
 		// kunena topic view loaded?
 		$app = $JInput->getString('option', null);
-		$view = $JInput->getString('view', null);		
+		$view = $JInput->getString('view', null);
 		if(empty($app) || empty($view))
 		{
 			return;
-		}		
+		}
 		if($app !== 'com_kunena' && $view !== 'topic')
 		{
 			return;
-		}		
+		}
 		
-		// category-id and topic-id given?	    
+		// category-id and topic-id given?
 		$catId = $JInput->getInt('catid', 0);
-		$topicId = $JInput->getInt('id', 0);	    
-	    if(empty($catId) || empty($topicId))
-	    {
-	    	return;
-	    }
+		$topicId = $JInput->getInt('id', 0);
+		
+		if(empty($catId) || empty($topicId))
+		{
+			return;
+		}
 		
 		// html view?
 		$document = JFactory::getDocument();
-	    $doctype = $document->getType();
-	    if($doctype !== 'html')
-	    {
-	    	return;	        
-	    }
+		$doctype = $document->getType();
+		if($doctype != 'html')
+		{
+			return;	        
+		}
+		
+		// topic already marked as solved?
+		$dbo = JFactory::getDBO();
+		$dbo->setQuery('SELECT kt.subject, kt.id
+			FROM #__kunena_topics kt
+			WHERE kt.id = ' . $topicId);
+		$dbo->query();
+		$topicData = $dbo->loadAssoc();
+		$topicSolvedText = $this->params->get('topic_solved_text', '[SOLVED]');
+		if(stripos($topicData['subject'], $topicSolvedText) !== false)
+		{
+			return false;
+		}
 		
 		// user authorized to see/use solved button?
-	    if($this->_userIsAuthorized() === false)
-	    {
-	    	return;
-	    }
-
+		if($this->_userIsAuthorized() == false)
+		{
+			return false;
+		}
+		
 		// insert button-code into html:
 		if ($topicLocked == 0) {
 			$buttonText = JText::_('PLG_KUNENA_ONECLICKSOLVED_BUTTONTEXT_SOLVED');
@@ -157,33 +172,38 @@ class plgKunenaOneClickSolved extends JPlugin
 		}
 		$buttonCode = '
 			<div class="OneClickSolved" style="float: right; margin: 0 5px;">
-				<a class="kicon-button kbuttonuser kbuttonmod btn-left" href="' . KunenaRoute::_('index.php?option=com_kunena&view=topic&ocstask=solved&catid='.$catId.'&id='.$topicId) . '">
-					<span class="sticky">
+				<a class="kicon-button kbuttonuser btn-left" href="' . KunenaRoute::_('index.php?option=com_kunena&view=topic&ocstask=solved&catid='.$catId.'&id='.$topicId) . '">
+					<span class="sticky" style="background-position: 0 -280px;">
 						<span>' . $buttonText . '</span>
 					</span>
 				</a>
 			</div>
 		';
-	    $body = JResponse::getBody();
-	    preg_match_all('#<div class="kmessage-buttons-cover">\s+<div class="kmessage-buttons-row">.*</div>\s+</div>#Us', $body, $matches);	    
-	    if(empty($matches[0]))
-	    {
-	    	return;
-	    }
-	    foreach($matches[0] as $originalText)
-	    {
-	    	$body = str_replace($originalText, $originalText . $buttonCode, $body);
-	    }
-	    JResponse::setBody($body);
+		
+		$body = JResponse::getBody();
+		
+		preg_match_all('#<div class="kmessage-buttons-cover">\s+<div class="kmessage-buttons-row">.*</div>\s+</div>#Us', $body, $matches);
+		
+		if(empty($matches[0]))
+		{
+			return;
+		}
+		
+		foreach($matches[0] as $originalText)
+		{
+			$body = str_replace($originalText, $originalText . $buttonCode, $body);
+		}
+		
+		JResponse::setBody($body);
 	}
 	
 	private function _userIsAuthorized()
-	{	
+	{
 		$dbo = JFactory::getDBO();
-		$User = JFactory::getUser();		
+		$User = JFactory::getUser();
 		$JInput = JFactory::getApplication()->input;
 		
-		$userId = (int)$User->id;		
+		$userId = (int)$User->id;
 		$topicId = $JInput->getInt('id', 0);
 		$catId = $JInput->getInt('catid', 0);
 		
@@ -200,32 +220,32 @@ class plgKunenaOneClickSolved extends JPlugin
 		$enableForTopicStarter = (int)$this->params->get('enable_for_topic_starter', 0);
 		
 		// authorize user if kunena-administrator:
-		if($enableForAdmins === 1)
+		if($enableForAdmins == 1)
 		{
-			if($isKunenaAdmin === true)
+			if($isKunenaAdmin == true)
 			{
-				return true;				
+				return true;
 			}
 		}
 		
 		// authorize user if kunena-moderator:
-		if($enableForModerators === 1)
-		{				
-			if($isKunenaModerator === true)
+		if($enableForModerators == 1)
+		{
+			if($isKunenaModerator == true)
 			{
 				return true;
-			}			
+			}
 		}
 		
 		// authorize user if topic-starter:
-		if($enableForTopicStarter === 1)
+		if($enableForTopicStarter == 1)
 		{
 			$dbo->setQuery("SELECT kt.first_post_userid
 				FROM #__kunena_topics kt
 				WHERE kt.id = " . $topicId);
-			$dbo->query();		
-			$authorId = (int)$dbo->loadResult();		
-			if($authorId === $userId)
+			$dbo->query();
+			$authorId = (int)$dbo->loadResult();
+			if($authorId == $userId)
 			{
 				return true;
 			}
