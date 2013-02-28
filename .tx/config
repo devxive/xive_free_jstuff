@@ -1,0 +1,16 @@
+[main]
+host = https://www.transifex.com
+lang_map = de_DE:de-DE, en_GB:en-GB, fr_FR:fr-FR, nl_NL:nl-NL, pt_PT:pt-PT
+
+[xive_free_jstuff.plg_kunena_oneclicksolvedsysini]
+file_filter = plugins/plg_kunena_oneclicksolved/language/<lang>/<lang>.plg_kunena_oneclicksolved.sys.ini
+source_file = plugins/plg_kunena_oneclicksolved/language/en-GB/en-GB.plg_kunena_oneclicksolved.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
+[xive_free_jstuff.plg_content_xivewikilinkersys]
+file_filter = plugins/plg_content_xivewikilinker/language/<lang>/<lang>.plg_content_xivewikilinker.sys.ini
+source_file = plugins/plg_content_xivewikilinker/language/en-GB/en-GB.plg_content_xivewikilinker.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
