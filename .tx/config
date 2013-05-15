@@ -7,11 +7,11 @@ type = INI
 file_filter = plugins/plg_kunena_oneclicksolved/language/<lang>/<lang>.plg_kunena_oneclicksolved.sys.ini
 source_file = plugins/plg_kunena_oneclicksolved/language/en-GB/en-GB.plg_kunena_oneclicksolved.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 100
 
 [xive_free_jstuff.plg_content_xivewikilinkersys]
 file_filter = plugins/plg_content_xivewikilinker/language/<lang>/<lang>.plg_content_xivewikilinker.sys.ini
 source_file = plugins/plg_content_xivewikilinker/language/en-GB/en-GB.plg_content_xivewikilinker.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 100
 
