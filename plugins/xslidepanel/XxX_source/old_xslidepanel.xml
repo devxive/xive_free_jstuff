@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+	<name>PLG_SYS_XAFBOOTSTRAP</name>
+	<author>devXive</author>
+	<creationDate>November 2012</creationDate>
+	<copyright>Copyright (C) 1997 - 2012 devXive - research and development. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>support@devXive.com</authorEmail>
+	<authorUrl>www.devxive.com</authorUrl>
+	<version>1.0.1</version>
+	<description>PLG_SYS_XAFBOOTSTRAP_XML_DESC</description>
+	
+	<files>
+		<filename plugin="xafbootstrap">xafbootstrap.php</filename>
+		<filename>index.html</filename>
+	</files>
+	
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_xafbootstrap.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_xafbootstrap.sys.ini</language>
+	</languages>
+	
+	<media folder="media" destination="xaf">
+		<filename>index.html</filename>
+		<folder>admin</folder>
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>img</folder>
+		<folder>js</folder>
+		<folder>less</folder>
+		<folder>plugins</folder>		
+	</media>
+	
+	<config>
+	<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="loadJquery"
+					type="list"
+					default="1"
+					label="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_JQUERY_LABEL"
+					description="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_JQUERY_DESC">
+						<option value="0">
+							PLG_SYS_XAFBOOTSTRAP_VALUE_DO_NOT_LOAD
+						</option>
+						<option value="1">
+							PLG_SYS_XAFBOOTSTRAP_VALUE_LOAD_LOCALLY
+						</option>
+						<option value="2">
+							PLG_SYS_XAFBOOTSTRAP_VALUE_LOAD_GOOGLE
+						</option>
+				</field>
+				<field
+					name="loadBootstrap"
+					type="radio"
+					default="1"
+					label="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_LABEL"
+					description="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_DESC">
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field
+					name="loadBootstrapCss"
+					type="radio"
+					default="1"
+					label="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_CSS_LABEL"
+					description="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_CSS_DESC">
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field
+					name="loadBootstrapCssOverride"
+					type="radio"
+					default="1"
+					label="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_CSS_OVERRIDE_LABEL"
+					description="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_CSS_OVERRIDE_DESC">
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field name="bootstrapMode"
+					type="list"
+		            label="PLG_SYS_XAFBOOTSTRAP_FIELD_BOOTSTRAP_MODE_LABEL"
+		            description="PLG_SYS_XAFBOOTSTRAP_FIELD_BOOTSTRAP_MODE_DESC"
+		            default="fluid">
+						<option value="fluid">PLG_SYS_XAFBOOTSTRAP_VALUE_FLUID</option>
+						<option value="static">PLG_SYS_XAFBOOTSTRAP_VALUE_STATIC</option>
+				</field>
+				<field
+					name="comColumns"
+					type="integer"
+					first="1"
+					last="12"
+					step="1"
+					default="12"
+					label="PLG_SYS_XAFBOOTSTRAP_FIELD_COM_COLUMNS_LABEL"
+					description="PLG_SYS_XAFBOOTSTRAP_FIELD_COM_COLUMNS_DESC" />
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="injectPosition"
+					type="list"
+		            label="PLG_SYS_XAFBOOTSTRAP_FIELD_INJECT_POSITION_LABEL"
+		            description="PLG_SYS_XAFBOOTSTRAP_FIELD_INJECT_POSITION_DESC"
+		            default="belowtitle">
+						<option value="headtop">PLG_SYS_XAFBOOTSTRAP_VALUE_HEADTOP</option>
+						<option value="belowtitle">PLG_SYS_XAFBOOTSTRAP_VALUE_BELOW_TITLE</option>
+				</field>
+				<field
+					name="loadFrontBack"
+					type="list"
+					default="frontend"
+					label="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_FRONTEND_BACKEND_LABEL"
+					description="PLG_SYS_XAFBOOTSTRAP_FIELD_LOAD_FRONTEND_BACKEND_DESC">
+						<option value="frontend">PLG_SYS_XAFBOOTSTRAP_VALUE_FRONTEND</option>
+						<option value="backend">PLG_SYS_XAFBOOTSTRAP_VALUE_BACKEND</option>
+						<option value="both">PLG_SYS_XAFBOOTSTRAP_VALUE_BOTH</option>
+				</field>
+                <field name="onlyHTML" type="radio"
+                       default="1"
+                       label="PLG_SYS_XAFBOOTSTRAP_FIELD_ONLY_HTML_LABEL"
+                       description="PLG_SYS_XAFBOOTSTRAP_FIELD_ONLY_HTML_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="disableModal" type="radio"
+                       default="0"
+                       label="PLG_SYS_XAFBOOTSTRAP_FIELD_DISABLE_MODAL_LABEL"
+                       description="PLG_SYS_XAFBOOTSTRAP_FIELD_DISABLE_MODAL_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+		  <field addfieldpath="/media/xaf/admin/formfield" type="asset" name="asset" path="media/xaf/admin/" />
+			</fieldset>
+	</fields>
+	</config>
+</extension>
